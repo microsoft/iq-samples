@@ -6,11 +6,11 @@ End-to-end samples showcasing **Foundry IQ**, **Fabric IQ**, and **Work IQ** int
 
 | Sample | Description | Stack |
 |--------|-------------|-------|
-| [Refund Agent (A365)](./samples/refund-agent-a365/) | A365 agent wrapping an Azure AI Foundry agent with Fabric Data Agent, Foundry IQ knowledge, and Work IQ (Teams/email) — deployed to Microsoft Teams | Python 3.11+, A365 SDK, React/Vite dashboard |
+| [Refund Agent (A365)](./refund-agent-a365/) | A365 agent wrapping an Azure AI Foundry agent with Fabric Data Agent, Foundry IQ knowledge, and Work IQ (Teams/email) — deployed to Microsoft Teams | Python 3.11+, A365 SDK, React/Vite dashboard |
 
 ## Getting Started
 
-Each sample is self-contained under `samples/`. Navigate to the sample folder and follow its `README.md` for setup instructions.
+Each sample is self-contained in its own folder at the repo root. Navigate to the sample folder and follow its `README.md` for setup instructions.
 
 ## Contributing
 

@@ -1,13 +1,12 @@
-# Copilot Instructions — IQ Samples (Monorepo)
+# Copilot Instructions — IQ Samples
 
 ## Repository Structure
 
-This is a **multi-sample monorepo**. Each sample under `samples/` is a completely independent project with its own language, dependencies, configuration, and deployment target.
+This is a **multi-sample repository**. Each sample folder at the repo root is a completely independent project with its own language, dependencies, configuration, and deployment target.
 
 ```
-samples/
-├── refund-agent-a365/   ← Python A365 agent + React dashboard
-└── (future samples…)
+refund-agent-a365/   ← Python A365 agent + React dashboard
+(future samples…)
 ```
 
 ## Critical Rules for Coding Agents
@@ -34,7 +33,7 @@ Never modify these without explicit permission:
 
 ### 6. Adding a new sample
 When adding a new sample:
-1. Create a new folder under `samples/`
+1. Create a new folder at the repo root
 2. Include a `README.md` with setup and usage instructions
 3. Include an `AGENTS.md` with coding agent directions for that sample
 4. Update the root `README.md` samples table
