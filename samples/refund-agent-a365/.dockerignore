@@ -1,0 +1,13 @@
+.git
+.azure
+.venv
+venv
+__pycache__
+frontend/node_modules
+frontend/e2e
+frontend/test-results
+*.zip
+*.log
+.env
+a365.config.json
+infra

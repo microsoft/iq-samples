@@ -1,0 +1,45 @@
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/test-results/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+
+# Environment
+.env
+
+# A365 CLI generated files
+a365.config.json
+a365.generated.config.json
+
+# Azure
+.azure/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+docker-logs/
+publish/
+app.zip
+docker-logs.zip
+manifest/
+uv.lock
+
+logs_extracted
+logs.zip
+*.zip
+*.pyc

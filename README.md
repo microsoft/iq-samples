@@ -1,18 +1,20 @@
-# Project
+# IQ Samples
 
-> This repo has been populated by an initial template to help get you started. Please
-> make sure to update the content to build a great experience for community-building.
+End-to-end samples showcasing **Foundry IQ**, **Fabric IQ**, and **Work IQ** integrations with Microsoft 365 agents and Azure AI Foundry.
 
-As the maintainer of this project, please make a few updates:
+## Samples
 
-- Improving this README.MD file to provide a great experience
-- Updating SUPPORT.MD with content about this project's support experience
-- Understanding the security reporting process in SECURITY.MD
-- Remove this section from the README
+| Sample | Description | Stack |
+|--------|-------------|-------|
+| [Refund Agent (A365)](./samples/refund-agent-a365/) | A365 agent wrapping an Azure AI Foundry agent with Fabric Data Agent, Foundry IQ knowledge, and Work IQ (Teams/email) — deployed to Microsoft Teams | Python 3.11+, A365 SDK, React/Vite dashboard |
+
+## Getting Started
+
+Each sample is self-contained under `samples/`. Navigate to the sample folder and follow its `README.md` for setup instructions.
 
 ## Contributing
 
-This project welcomes contributions and suggestions.  Most contributions require you to agree to a
+This project welcomes contributions and suggestions. Most contributions require you to agree to a
 Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us
 the rights to use your contribution. For details, visit [Contributor License Agreements](https://cla.opensource.microsoft.com).
 

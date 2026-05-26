@@ -1,0 +1,8 @@
+name: shipment-dashboard
+metadata:
+  template: shipment-dashboard
+services:
+  web:
+    project: .
+    language: py
+    host: appservice

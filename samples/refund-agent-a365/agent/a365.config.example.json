@@ -1,0 +1,39 @@
+{
+  "tenantId": "<your-tenant-id>",
+  "subscriptionId": "<your-subscription-id>",
+  "resourceGroup": "rg-a365-refundagent",
+  "location": "canadacentral",
+  "environment": "prod",
+  "needDeployment": true,
+  "graphBaseUrl": "https://graph.microsoft.com",
+  "clientAppId": "<your-a365-cli-client-app-id>",
+  "appServicePlanName": "ASP-rga365refundagent",
+  "appServicePlanSku": "B1",
+  "webAppName": "refundagent-a365",
+  "agentIdentityDisplayName": "refundagent Identity",
+  "agentBlueprintDisplayName": "refundagent Blueprint",
+  "agentUserPrincipalName": "refundagent@<your-domain>.onmicrosoft.com",
+  "agentUserDisplayName": "refundagent Agent User",
+  "managerEmail": "<your-email>",
+  "agentUserUsageLocation": "US",
+  "deploymentProjectPath": ".",
+  "agentDescription": "Contoso Refund Agent - processes refund requests via Foundry IQ + Fabric Data Agent",
+  "messagingEndpoint": "https://<webAppName>.azurewebsites.net/api/messages",
+  "customBlueprintPermissions": [
+    {
+      "resourceAppId": "ea9ffc3e-8a23-4a7d-836d-234d7c7565c1",
+      "resourceName": "Agent 365 Tools",
+      "scopes": ["McpServers.Mail.All", "McpServers.Teams.All", "McpServersMetadata.Read.All"]
+    },
+    {
+      "resourceAppId": "7d312290-28c8-473c-a0ed-8e53749b6d6d",
+      "resourceName": "Microsoft Cognitive Services",
+      "scopes": ["user_impersonation"]
+    },
+    {
+      "resourceAppId": "18a66f5f-dbdf-4c17-9dd7-1634712a9cbe",
+      "resourceName": "Azure Machine Learning Services",
+      "scopes": ["user_impersonation"]
+    }
+  ]
+}
