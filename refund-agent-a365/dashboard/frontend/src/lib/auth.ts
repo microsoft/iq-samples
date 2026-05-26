@@ -1,13 +1,13 @@
 /**
  * MSAL Configuration for Entra ID authentication
- * Uses the a365-cli-app registration in the cam3652606 tenant
+ * Replace the clientId and authority with your own Entra ID app registration values.
  */
 import { PublicClientApplication, type Configuration } from '@azure/msal-browser'
 
 const msalConfig: Configuration = {
   auth: {
-    clientId: 'ff57098a-9bac-4665-bc23-176f4fc2ba14',
-    authority: 'https://login.microsoftonline.com/0ba24274-387c-4708-8823-ddec0a7043d1',
+    clientId: import.meta.env.VITE_ENTRA_CLIENT_ID || '<your-app-registration-client-id>',
+    authority: `https://login.microsoftonline.com/${import.meta.env.VITE_ENTRA_TENANT_ID || '<your-tenant-id>'}`,
     redirectUri: window.location.origin,
   },
   cache: {
