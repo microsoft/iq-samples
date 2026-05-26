@@ -31,6 +31,12 @@ This is a **Python agent** that wraps an **Azure AI Foundry agent** (with Fabric
 | `agent-instructions.md` | **Foundry agent system prompt** (paste into Azure AI Foundry UI — this is NOT code) |
 | `dashboard/` | Full-stack demo dashboard (FastAPI backend + React frontend) |
 | `azure.yaml` | Azure Developer CLI deployment descriptor |
+| `scripts/setup_foundry_agent.py` | Programmatic Foundry agent creation with IQ tools (uses azure-ai-agents SDK) |
+| `scripts/requirements.txt` | Dependencies for the setup script (separate from agent deps) |
+
+## Setup Script
+
+`scripts/setup_foundry_agent.py` programmatically creates the Foundry agent with SDK-supported IQ tools (FileSearchTool for Foundry IQ, FabricTool for Fabric IQ). Work IQ has no SDK class and must be configured in the portal. The script depends on `scripts/requirements.txt` (separate from the agent's requirements). Auth uses `az login` (AzureCliCredential), not the API key.
 
 ## What NOT to Touch
 

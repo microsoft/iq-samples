@@ -46,6 +46,33 @@ pip install -r agent/requirements.txt
 
 ### Step 2: Create the Foundry Agent with 3 IQs
 
+You can set up the agent **manually via the portal** or **programmatically via the setup script**.
+
+#### Option A: Use the Setup Script (recommended)
+
+The script automates Foundry agent creation with SDK-supported tools (Foundry IQ + Fabric IQ). Work IQ must still be configured in the portal after.
+
+```bash
+# Install script dependencies
+pip install -r scripts/requirements.txt
+
+# Discover your project connections (find Fabric connection ID)
+python scripts/setup_foundry_agent.py --connections
+
+# Set connection IDs in agent/.env:
+#   FABRIC_CONNECTION_ID=/subscriptions/.../connections/<name>
+#   BING_CONNECTION_NAME=<optional>
+
+# Create the agent (with optional knowledge files for Foundry IQ)
+python scripts/setup_foundry_agent.py --knowledge-files docs/refund-policy.pdf
+
+# Then follow the printed instructions to add Work IQ in the portal
+```
+
+See `scripts/setup_foundry_agent.py --help` for all options (`--list`, `--delete`, `--connections`).
+
+#### Option B: Manual Portal Setup
+
 In the Azure AI Foundry portal (https://ai.azure.com), open your project and create a new agent.
 
 #### 2.1 — Create the Agent
