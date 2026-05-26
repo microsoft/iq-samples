@@ -1,4 +1,8 @@
-# AI Agent Guidelines — Refund Agent (A365 + 3IQs)
+# Copilot Instructions — Refund Agent (A365 + 3IQs)
+
+## Scope
+
+This sample is part of the `microsoft/iq-samples` repo. **Only read and modify files within this folder** (`refund-agent-a365/`). Do not touch other samples or root-level governance files (LICENSE, CODE_OF_CONDUCT.md, SECURITY.md, SUPPORT.md).
 
 ## Project Identity
 

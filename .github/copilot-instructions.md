@@ -14,8 +14,8 @@ refund-agent-a365/   ← Python A365 agent + React dashboard
 ### 1. Stay in your lane
 When working on a sample, **only read and modify files within that sample's folder**. Never cross-pollinate code, dependencies, environment variables, or configuration between samples.
 
-### 2. Read the sample's AGENTS.md first
-Before making any changes to a sample, read its `AGENTS.md` file for project-specific context — tech stack, key files, gotchas, and what not to touch.
+### 2. Read the sample's copilot instructions first
+Before making any changes to a sample, read its `.github/copilot-instructions.md` file for project-specific context — tech stack, key files, gotchas, and what not to touch.
 
 ### 3. Do not modify root-level governance files
 Never modify these without explicit permission:
@@ -35,5 +35,5 @@ Never modify these without explicit permission:
 When adding a new sample:
 1. Create a new folder at the repo root
 2. Include a `README.md` with setup and usage instructions
-3. Include an `AGENTS.md` with coding agent directions for that sample
+3. Include a `.github/copilot-instructions.md` with coding agent directions for that sample
 4. Update the root `README.md` samples table
