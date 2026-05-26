@@ -1,23 +1,12 @@
 # Refund Agent — A365 + 3IQs
 
-> ⛔ **DO NOT TOUCH** — The following Azure resources are **production** and must never be modified, restarted, redeployed to, or deleted:
-> - **Resource Group:** `rg-a365-refunda-canadacentral`
-> - **App Service Plan:** `rg-a365-refunda-canadacentral-plan`
-> - **Web App:** `refundagentv2-webapp` (https://refundagentv2-webapp.azurewebsites.net)
->
-> These host the live A365 Teams agent. Any interference will break the Teams bot.
-
-## What This Is
-
 A Python agent that wraps an **Azure AI Foundry agent** (with Fabric Data Agent + Work IQ tools) and publishes it to **Microsoft Teams / M365 Copilot** via the **Microsoft Agent 365 (A365)** SDK.
 
-The Foundry agent handles all intelligence (instructions, model, tool connections). This project is purely the A365 hosting wrapper that adds: Teams messaging, notifications (email, Word comments), observability, and user identity passthrough (OBO).
-
-https://github.com/user-attachments/assets/a77ad787-500e-455b-9244-a499743ce913
+The Foundry agent handles all intelligence (instructions, model, tool connections). This project is the A365 hosting wrapper that adds: Teams messaging, notifications (email, Word comments), observability, and user identity passthrough (OBO).
 
 ---
 
-## Setup Instructions (for Copilot to execute)
+## Setup Instructions
 
 ### Tested Versions
 
@@ -46,11 +35,11 @@ Follow these steps in order. The user must have:
 ### Step 1: Clone and Install Dependencies
 
 ```bash
-git clone https://github.com/aycabas/refund-agent-a365.git
-cd refund-agent-a365
+git clone https://github.com/microsoft/iq-samples.git
+cd iq-samples/refund-agent-a365
 python -m venv .venv
 .venv/Scripts/activate  # Windows
-pip install -r requirements.txt
+pip install -r agent/requirements.txt
 ```
 
 ---
@@ -671,14 +660,13 @@ The Foundry agent endpoint (`services.ai.azure.com`) requires tokens with audien
 A standalone web UI for the Refund Agent — separate from the A365/Teams bot. Provides a chat interface with a shipment visualization dashboard.
 
 - **Local:** http://localhost:5173 (frontend) + http://localhost:8000 (backend)
-- **Deployed:** https://shipment-dashboard.gentleforest-8d33b38e.westus.azurecontainerapps.io
 
 ### Architecture
 
 ```
 Frontend (React/Vite)  →  WebSocket  →  Backend (FastAPI/Uvicorn)  →  Foundry Responses API  →  Agent Tools
      ↓                                      ↓                                                    ↓
-  MSAL Login                         Bearer Token Passthrough                          Fabric IQ, WorkIQ, 
+  MSAL Login                         Bearer Token Passthrough                          Fabric IQ, WorkIQ,
   (Entra ID)                         (user token or managed identity)                  WorldGrounding, KB
 ```
 
@@ -693,8 +681,7 @@ Frontend (React/Vite)  →  WebSocket  →  Backend (FastAPI/Uvicorn)  →  Foun
 | HTTP Client | `requests` (NOT httpx — see Known Issues) |
 | Auth (local) | Azure CLI credential (`az login`) |
 | Auth (deployed) | Managed Identity + MSAL user token passthrough |
-| Hosting (deployed) | Azure Container Apps (Consumption) |
-| Container Registry | `shipmentdashboardacr.azurecr.io` |
+| Hosting | Azure Container Apps (Consumption) |
 
 ### Key Files
 
@@ -714,17 +701,17 @@ Frontend (React/Vite)  →  WebSocket  →  Backend (FastAPI/Uvicorn)  →  Foun
 
 ### Running Locally
 
-**Prerequisites:** Python 3.12+, Node.js 18+, Azure CLI logged in (`az login` with a user account in the cam3652606 tenant)
+**Prerequisites:** Python 3.12+, Node.js 18+, Azure CLI logged in (`az login` with a user account in your tenant)
 
 ```bash
 # 1. Install backend deps
-cd backend
+cd dashboard/backend
 pip install -r requirements.txt
 
 # 2. Create backend/.env
 cat > .env << EOF
-AZURE_PROJECT_ENDPOINT=https://3iqs-aycabas-westus-resource.services.ai.azure.com/api/projects/3iqs-aycabas-westus
-FOUNDRY_AGENT_NAME=Refund-agent
+AZURE_PROJECT_ENDPOINT=<your-foundry-project-endpoint>
+FOUNDRY_AGENT_NAME=<your-foundry-agent-name>
 EOF
 
 # 3. Start backend
@@ -732,7 +719,7 @@ python -m uvicorn main:app --reload
 # Backend runs at http://localhost:8000
 
 # 4. In a new terminal — install and start frontend
-cd frontend
+cd dashboard/frontend
 npm install
 npm run dev
 # Frontend runs at http://localhost:5173
@@ -744,64 +731,40 @@ Open http://localhost:5173, sign in with Microsoft, and start chatting.
 
 ---
 
-### Deployed App (Azure Container Apps)
+### Deploying the Dashboard
 
-**URL:** https://shipment-dashboard.gentleforest-8d33b38e.westus.azurecontainerapps.io
-
-**Azure Resources:**
-
-| Resource | Name | Resource Group | Location |
-|----------|------|---------------|----------|
-| Container Apps Environment | `shipment-dashboard-env` | `rg-aycabas-3iqs` | West US |
-| Container App | `shipment-dashboard` | `rg-aycabas-3iqs` | West US |
-| Container Registry | `shipmentdashboardacr` | `rg-aycabas-3iqs` | West US |
-| Managed Identity | System-assigned (`b566b547-60b4-428d-8005-8e5c2f14dbf5`) | — | — |
-
-**Environment Variables (set on Container App):**
-
-| Variable | Value |
-|----------|-------|
-| `AZURE_PROJECT_ENDPOINT` | `https://3iqs-aycabas-westus-resource.services.ai.azure.com/api/projects/3iqs-aycabas-westus` |
-| `FOUNDRY_AGENT_NAME` | `Refund-agent` |
-| `FOUNDRY_AGENT_VERSION` | `37` |
-
-**RBAC:**
-- Managed Identity has `Cognitive Services User` role on `3iqs-aycabas-westus-resource`
-
-#### Redeploying
+The dashboard can be deployed to Azure Container Apps using the included `Dockerfile`.
 
 ```bash
 # Build image in cloud
-cd refund-agent-a365
-az acr build --registry shipmentdashboardacr --image shipment-dashboard:latest --file Dockerfile .
+az acr build --registry <your-acr-name> --image shipment-dashboard:latest --file dashboard/Dockerfile .
 
 # Update container app
-az containerapp update --name shipment-dashboard --resource-group rg-aycabas-3iqs --image shipmentdashboardacr.azurecr.io/shipment-dashboard:latest
+az containerapp update --name <app-name> --resource-group <rg> --image <your-acr>.azurecr.io/shipment-dashboard:latest
 ```
 
-#### Viewing Logs
+**Required environment variables on the Container App:**
 
-```bash
-# Live logs
-az containerapp logs show --name shipment-dashboard --resource-group rg-aycabas-3iqs --tail 50 --follow
+| Variable | Description |
+|----------|-------------|
+| `AZURE_PROJECT_ENDPOINT` | Your Foundry project endpoint |
+| `FOUNDRY_AGENT_NAME` | The agent's display name in Foundry |
+| `FOUNDRY_AGENT_VERSION` | (Optional) Pin to a specific agent version |
 
-# Search for errors
-az containerapp logs show --name shipment-dashboard --resource-group rg-aycabas-3iqs --tail 100 | Select-String "ERROR"
-```
+**RBAC:** The Container App's managed identity needs `Cognitive Services User` on the AI Services resource.
 
 ---
 
 ### Authentication (MSAL + Entra ID)
 
-**App Registration:** `a365-cli-app` (`ff57098a-9bac-4665-bc23-176f4fc2ba14`)
-**Tenant:** `cam3652606.onmicrosoft.com` (`0ba24274-387c-4708-8823-ddec0a7043d1`)
+You need an **Entra ID app registration** with a **SPA** redirect URI configured.
 
-**SPA Redirect URIs (configured on app registration):**
+**SPA Redirect URIs (configure on your app registration):**
 - `http://localhost:5173` (local dev)
-- `https://shipment-dashboard.gentleforest-8d33b38e.westus.azurecontainerapps.io` (deployed)
+- `https://<your-deployed-url>` (deployed)
 
-**API Permissions on app registration:**
-- Microsoft Graph — various delegated permissions
+**Required API Permissions on the app registration:**
+- Microsoft Graph — delegated permissions as needed
 - WorkIQ (`ea9ffc3e-8a23-4a7d-836d-234d7c7565c1`) — `McpServers.Teams.All` and others
 - Azure Machine Learning Services (`18a66f5f-dbdf-4c17-9dd7-1634712a9cbe`) — `user_impersonation`
 
@@ -863,7 +826,7 @@ resp = http_client.post(url, json=payload, timeout=120)
 
 **Fix:**
 ```bash
-az containerapp identity assign --name shipment-dashboard --resource-group rg-aycabas-3iqs --system-assigned
+az containerapp identity assign --name <app-name> --resource-group <rg> --system-assigned
 az role assignment create --assignee <principal-id> --role "Cognitive Services User" --scope <foundry-resource-id>
 ```
 
@@ -880,18 +843,10 @@ az rest --method PATCH --url "https://graph.microsoft.com/v1.0/applications/<obj
   --headers "Content-Type=application/json"
 ```
 
-#### 6. Sharing App Service Plan broke the Teams bot
-
-**Lesson learned:** Deploying `shipment-dashboard` to the same App Service Plan (`rg-a365-refunda-canadacentral-plan`) as `refundagentv2-webapp` caused the Teams bot to crash during restarts/redeployments.
-
-**Fix:** Never share infrastructure with the A365 bot. The dashboard now runs on its own Container App in `rg-aycabas-3iqs`.
-
-> ⛔ **NEVER** deploy to or restart resources in `rg-a365-refunda-canadacentral`. See warning at top of this README.
-
-#### 7. App Service VM quota = 0
+#### 6. App Service VM quota limitations
 
 **Error:** `SubscriptionIsOverQuotaForSku — Operation cannot be completed without additional quota`
 
-**Root cause:** The M365 Advocacy subscription has zero App Service VM quota in all regions except Canada Central.
+**Root cause:** Some subscriptions have limited App Service VM quota in certain regions.
 
-**Fix:** Used Azure Container Apps (Consumption plan) instead — no VM quota required.
+**Fix:** Use Azure Container Apps (Consumption plan) instead — no VM quota required. Or request a quota increase for your subscription.
