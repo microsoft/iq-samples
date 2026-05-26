@@ -10,7 +10,31 @@ End-to-end samples showcasing **Foundry IQ**, **Fabric IQ**, and **Work IQ** int
 
 ## Getting Started
 
-Each sample is self-contained in its own folder at the repo root. Navigate to the sample folder and follow its `README.md` for setup instructions.
+### Prerequisites
+
+- **Azure subscription** with access to [Azure AI Foundry](https://ai.azure.com)
+- **Microsoft 365 tenant** enrolled in the [Frontier Preview Program](https://adoption.microsoft.com/copilot/frontier-program/)
+- **Azure CLI** (`az login`) and **A365 CLI** ([install guide](https://learn.microsoft.com/en-us/microsoft-agent-365/developer/install-cli))
+- **Python 3.11+** (for agent samples)
+- **Node.js 18+** (for dashboard frontends)
+
+### Quick Start
+
+1. **Clone the repo:**
+   ```bash
+   git clone https://github.com/microsoft/iq-samples.git
+   cd iq-samples
+   ```
+
+2. **Pick a sample** from the table above and navigate to its folder
+
+3. **Follow the sample's README** — each sample has step-by-step setup instructions covering:
+   - Creating and configuring the Foundry agent with IQ tools
+   - Setting up Foundry IQ (knowledge/RAG), Work IQ (Teams/email), and Fabric IQ (data agent)
+   - A365 teammate provisioning and deployment
+   - Troubleshooting common errors
+
+> **Tip:** Each sample also includes a `TROUBLESHOOTING.md` with solutions for all known errors. If you get stuck, check there first.
 
 ## Contributing
 

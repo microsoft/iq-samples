@@ -51,6 +51,17 @@ cd dashboard/backend && pip install -r requirements.txt
 cd dashboard/frontend && npm install
 ```
 
+## Troubleshooting & Known Errors
+
+**IMPORTANT:** When encountering any errors during setup, deployment, or runtime, **always check [`TROUBLESHOOTING.md`](../TROUBLESHOOTING.md) first** before debugging blind. It contains solutions for all known issues including:
+- RBAC/permission errors (401, 403)
+- OBO token failures (ARA OBO, BadRequest)
+- Foundry agent errors (404, model mismatch)
+- Work IQ issues (email search, tenant denied, 502 on email channel)
+- Fabric Data Agent failures (tool_user_error, prerequisites)
+- Deployment issues (timeout, quota, WAM auth)
+- Dashboard errors (httpx, MSAL redirect, managed identity)
+
 ## Security
 
 - All secrets go in `.env` (gitignored) — never hardcode API keys, connection strings, or tokens
