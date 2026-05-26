@@ -92,31 +92,53 @@ Work IQ lets the agent read/send Teams messages and emails on behalf of the A365
 
 Fabric IQ connects the agent to your data in Microsoft Fabric (Lakehouse, Warehouse, SQL endpoint) through a Fabric Data Agent.
 
-**Prerequisites — create the Fabric Data Agent first:**
+**Step A — Prepare your data in Fabric:**
 
-1. Go to https://app.fabric.microsoft.com
-2. Open your workspace → **+ New** → **Data Agent** (preview)
-3. Select the data sources to connect:
-   - Lakehouse tables (e.g., shipments, orders, customers)
-   - Warehouse tables
-   - SQL analytics endpoints
-4. Configure the data agent:
-   - Give it a descriptive name (e.g., `contoso-logistics-data`)
-   - Add instructions that describe the data schema (table names, column descriptions)
-   - Test queries in the Fabric Data Agent playground to verify it works
-5. **Publish** the data agent
+1. Go to https://app.fabric.microsoft.com and open (or create) a workspace
+2. Create a **Lakehouse** with your data tables:
+   - For this sample: tables like `packages`, `customers`, `hubs`, `drivers`, `handoffs`, `payments`
+   - Upload data via CSV, notebooks, or the OneLake DFS API
+   - Each table becomes queryable via SQL
+3. (Optional) Create a **Knowledge Graph** for relationship traversal:
+   - Define node types (e.g., Package, Hub, Driver, Customer) and edge types (e.g., processed_at, driven_by)
+   - Graph enables multi-hop queries like "trace this package's full journey" that are hard with flat SQL
 
-**Connect it to your Foundry agent:**
+**Step B — Create the Fabric Data Agent:**
 
-1. Back in the Foundry agent's **Tools** section, click **+ Add tool** → **Fabric Data Agent**
-2. Select the Fabric Data Agent you just created
-   - The Fabric data agent must be in the **same tenant** as the Foundry project
-3. Click **Save**
+1. In the workspace, click **+ New** → **Data Agent** (preview)
+2. Give it a descriptive name (e.g., `contoso-logistics-data`)
+3. **Add datasources** — select which Fabric items the agent can query:
+   - Your Lakehouse (SQL queries for analytics, payments, aggregations)
+   - Your Knowledge Graph (GQL queries for relationship traversal) — if created
+4. **Configure each datasource** (this is critical for quality):
+   - **Description**: Explain what the data contains (e.g., "Relational lakehouse containing package delivery data: hubs, drivers, customers, packages, handoffs, and payments")
+   - **Instructions**: Provide the full schema — table names, column names with types, primary/foreign keys, and common join patterns. The more detail you give, the better the agent's SQL/GQL queries will be
+   - **Select tables/elements**: Choose which tables or graph elements the agent can access
+5. **Add AI instructions** (agent-level): Write routing logic that tells the agent when to use which datasource. For example:
+   - "Use Lakehouse for payment queries, counts, and aggregations"
+   - "Use Knowledge Graph for journey tracing and relationship traversal"
+   - "Use BOTH when the question involves tracking AND financial data"
+6. **Add example queries** (few-shot): Import example question → SQL/GQL pairs via the portal UI or JSON import. These dramatically improve query accuracy
+7. **Test** queries in the Data Agent playground to verify it works
+8. **Publish** the data agent — this creates a published version that Foundry can connect to
+
+> **Tip:** You can also create and configure a Fabric Data Agent programmatically via the Fabric REST API (`POST /v1/workspaces/{workspaceId}/DataAgents` + `updateDefinition`). See the [fabriciq-foundry-viz](https://github.com/aycabas/fabriciq-foundry-viz) repo for scripted examples.
+
+**Step C — Connect to your Foundry agent:**
+
+1. In Azure AI Foundry, go to **Management center** → **Connected resources** → **+ New connection** → **Microsoft Fabric**
+2. Select the published Fabric Data Agent — this creates a connection resource
+3. Note the **connection ID** (full ARM path: `/subscriptions/.../connections/<name>`)
+4. Back in the Foundry agent's **Tools** section, click **+ Add tool** → **Fabric Data Agent**
+5. Select the connection you just created
+   - The Fabric Data Agent must be in the **same tenant** as the Foundry project
+6. Click **Save**
 
 **Required permissions for Fabric IQ:**
 - The A365 teammate account needs **Viewer** or **Member** access on the Fabric workspace (see Step 8)
 - Blueprint must have inheritable permissions for **Microsoft Cognitive Services** and **Azure Machine Learning Services** (see Step 4.2)
-- The delegated user must have READ access on the underlying data sources
+- The delegated user must have READ access on the underlying data sources (Lakehouse, Warehouse, etc.)
+- The token scope must be `https://ai.azure.com/.default` — Foundry internally handles the OBO exchange to Fabric
 
 > **Tip:** You can also add **Grounding with Bing Search** as a tool in the Foundry portal. This lets the agent search the web for real-time information (e.g., shipping delays, product recalls). No additional permissions are needed — just add the tool and save.
 
