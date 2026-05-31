@@ -1,6 +1,10 @@
 # IQ Samples
 
-End-to-end samples showcasing **Foundry IQ**, **Fabric IQ**, and **Work IQ** integrations with Microsoft 365 agents and Azure AI Foundry.
+End-to-end samples showcasing **Foundry IQ**, **Fabric IQ**, **Work IQ**, and **Web IQ** integrations with Microsoft 365 agents and Azure AI Foundry.
+
+> 📚 **New to the IQs?** Start with **[The Microsoft IQ Series](https://github.com/microsoft/iq-series)** — a guided learning series that explains Foundry IQ, Fabric IQ, Work IQ, and Web IQ from the ground up. Then come back here to build with them.
+>
+> 💬 **Questions or stuck?** Ask in the **[IQ Discussions](https://aka.ms/iq/discussions)** — we (and the community) are there to help.
 
 ## Samples
 
@@ -35,6 +39,12 @@ End-to-end samples showcasing **Foundry IQ**, **Fabric IQ**, and **Work IQ** int
    - Troubleshooting common errors
 
 > **Tip:** Each sample also includes a `TROUBLESHOOTING.md` with solutions for all known errors. If you get stuck, check there first.
+
+## Learn More & Get Help
+
+- 📚 **[The Microsoft IQ Series](https://github.com/microsoft/iq-series)** — a guided learning series covering Foundry IQ, Fabric IQ, Work IQ, and Web IQ. The best place to understand the concepts before (or while) building these samples.
+- 💬 **[IQ Discussions](https://aka.ms/iq/discussions)** — ask questions, share what you built, and get help from the team and community.
+- 🐛 **Issues** — found a bug in a sample? Open an issue in this repo.
 
 ## Contributing
 
