@@ -1,6 +1,6 @@
 """TravelAgent — a hosted Foundry agent grounded with Foundry IQ + Work IQ Mail.
 
-This agent is designed for **hosted deployment** to Azure AI Foundry, where:
+This agent is designed for **hosted deployment** to Microsoft Foundry, where:
 
 - The **Foundry IQ** knowledge base (corporate travel policies) is declared in
   ``agent.manifest.yaml`` and injected by the hosting platform automatically.

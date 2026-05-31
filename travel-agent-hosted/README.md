@@ -1,6 +1,6 @@
 # Travel Agent — Foundry IQ + Work IQ (hosted)
 
-A **hosted Azure AI Foundry agent**, built with the **Microsoft Agent Framework SDK**, that helps employees with corporate travel. It is grounded with two IQ tools:
+A **hosted Microsoft Foundry agent**, built with the **Microsoft Agent Framework SDK**, that helps employees with corporate travel. It is grounded with two IQ tools:
 
 - **Foundry IQ** — a knowledge base of corporate travel policies (booking approvals, preferred vendors, per diems, international requirements).
 - **Work IQ Mail** — searches the employee's email for recent policy updates, budget freezes, and temporary overrides — so the agent answers with *both* the standing policy **and** what changed this quarter.
@@ -15,7 +15,7 @@ The result: ask *"What's the travel budget for New York?"* and instead of guessi
 
 ```
 ┌─────────────────────────────────────────────────────────┐
-│  Azure AI Foundry — Hosted Agent (Responses protocol)    │
+│  Microsoft Foundry — Hosted Agent (Responses protocol)    │
 │                                                          │
 │  agent/agent.py  ──►  FoundryChatClient + Agent          │
 │        │                  (system prompt = the brains)   │
@@ -34,7 +34,7 @@ The agent's **intelligence** is the system prompt in `agent/agent.py`. The **too
 
 ## 🚀 Fastest path: build it with GitHub Copilot CLI
 
-This sample spans an Azure AI Foundry project, a Foundry IQ knowledge base, a Work IQ Mail connection, a hosted deployment, and an evaluation suite. Instead of clicking through every step, let **[GitHub Copilot CLI](https://docs.github.com/en/copilot/concepts/agents/about-copilot-cli)** drive it.
+This sample spans an Microsoft Foundry project, a Foundry IQ knowledge base, a Work IQ Mail connection, a hosted deployment, and an evaluation suite. Instead of clicking through every step, let **[GitHub Copilot CLI](https://docs.github.com/en/copilot/concepts/agents/about-copilot-cli)** drive it.
 
 ```bash
 # 1. Install GitHub Copilot CLI (requires a GitHub Copilot subscription)
@@ -51,7 +51,7 @@ copilot
 Then paste this prompt:
 
 > Read the README.md and .github/copilot-instructions.md in this folder end to end. I want to stand up this hosted Travel Agent on my own Azure tenant. Help me, step by step:
-> 1. Verify prerequisites (az login, an Azure AI Foundry project, a deployed chat model, an M365 license with mail for Work IQ).
+> 1. Verify prerequisites (az login, an Microsoft Foundry project, a deployed chat model, an M365 license with mail for Work IQ).
 > 2. Create a Foundry IQ knowledge base from `knowledge/travel-policies.json` and name it to match the `knowledge.id` in `agent/agent.manifest.yaml`.
 > 3. Configure the Work IQ Mail tool connection (OBO) in my Foundry project.
 > 4. Fill in `agent/.env` from the template, then deploy the hosted agent.
@@ -65,7 +65,7 @@ Then paste this prompt:
 ### Prerequisites
 
 - **Azure CLI** logged in (`az login`)
-- An **Azure AI Foundry project** ([ai.azure.com](https://ai.azure.com)) with a deployed chat model (e.g. `gpt-4.1`)
+- An **Microsoft Foundry project** ([ai.azure.com](https://ai.azure.com)) with a deployed chat model (e.g. `gpt-4.1`)
 - An **Azure AI Search** service (backs the Foundry IQ knowledge base)
 - A **Microsoft 365 mailbox / license** for the test user (Work IQ Mail searches real email) — a tenant enrolled in the [Frontier Preview Program](https://adoption.microsoft.com/copilot/frontier-program/)
 - **Python 3.12+**

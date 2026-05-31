@@ -6,7 +6,7 @@ This sample is part of the `microsoft/iq-samples` repo. **Only read and modify f
 
 ## Project Identity
 
-This is a **hosted Azure AI Foundry agent** built with the **Microsoft Agent Framework SDK**. It is a corporate travel assistant grounded with two IQ tools:
+This is a **hosted Microsoft Foundry agent** built with the **Microsoft Agent Framework SDK**. It is a corporate travel assistant grounded with two IQ tools:
 
 - **Foundry IQ** — a knowledge base of corporate travel policies (agentic retrieval).
 - **Work IQ Mail** — searches the employee's email for recent policy updates, budget freezes, and temporary overrides (via OBO / on-behalf-of auth).
@@ -19,7 +19,7 @@ The agent's intelligence lives in the system prompt in `agent/agent.py`. The too
 |-----------|-----------|
 | **Agent host** | Python 3.12, Agent Framework SDK (`agent-framework-*`), `agent-framework-foundry-hosting` |
 | **Protocol** | Responses (`ResponsesHostServer`) |
-| **Deployment** | Azure AI Foundry hosted agent (`agent.yaml` + `Dockerfile`) |
+| **Deployment** | Microsoft Foundry hosted agent (`agent.yaml` + `Dockerfile`) |
 | **Evaluation** | `pytest-agent-evals` against the deployed agent |
 
 ## Key Files
