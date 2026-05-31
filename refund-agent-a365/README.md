@@ -6,6 +6,36 @@ The Foundry agent handles all intelligence (instructions, model, tool connection
 
 ---
 
+## 🚀 Fastest path: build it with GitHub Copilot CLI
+
+This setup spans Azure AI Foundry, four IQ tool connections, and the A365 SDK — a lot of moving parts. Instead of clicking through every step by hand, let **[GitHub Copilot CLI](https://docs.github.com/en/copilot/concepts/agents/about-copilot-cli)** drive it for you. It can read this README, run the `az`/A365 CLI commands, create the Foundry agent, wire up the IQ connections (with the correct auth types), and deploy.
+
+```bash
+# 1. Install GitHub Copilot CLI (requires a GitHub Copilot subscription)
+npm install -g @github/copilot
+
+# 2. Clone and enter the sample
+git clone https://github.com/microsoft/iq-samples.git
+cd iq-samples/refund-agent-a365
+
+# 3. Launch Copilot CLI in this folder
+copilot
+```
+
+Then paste this prompt:
+
+> Read the README.md and TROUBLESHOOTING.md in this folder end to end. I want to stand up this Refund Agent sample on my own Azure tenant. Help me, step by step:
+> 1. Verify prerequisites (az login, A365 CLI ≥ 1.1.171, an Azure AI Foundry project, an M365 E5/Copilot license with Teams).
+> 2. Create the Foundry agent using `scripts/setup_foundry_agent.py`, uploading my refund-policy doc as Foundry IQ knowledge.
+> 3. Wire up all four IQ tools with the **correct connection auth types** — Work IQ and Fabric IQ as `UserEntraToken` (identity passthrough), Web IQ as `CustomKeys`. Watch out for the OAuth2-vs-UserEntraToken gotcha documented in TROUBLESHOOTING.md.
+> 4. Grant the required RBAC (Azure AI Developer on the AI Services account + project) and Fabric workspace access for the teammate user.
+> 5. Configure and deploy the A365 host, then help me test it in Teams.
+> Run the commands for me where you can, explain each step, and pause for any values only I can provide (subscription, resource names, API keys). Never commit secrets.
+
+> **Tip:** Copilot CLI works best when it can see the docs — keep it running from inside `refund-agent-a365/` so it picks up this README, `TROUBLESHOOTING.md`, and `.github/copilot-instructions.md` automatically.
+
+---
+
 ## Setup Instructions
 
 ### Tested Versions
