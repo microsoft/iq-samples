@@ -1,6 +1,6 @@
-# Refund Agent — A365 + 3IQs
+# Refund Agent — A365 + 4 IQs
 
-A Python agent that wraps an **Azure AI Foundry agent** (with Fabric Data Agent + Work IQ tools) and publishes it to **Microsoft Teams / M365 Copilot** via the **Microsoft Agent 365 (A365)** SDK.
+A Python agent that wraps an **Azure AI Foundry agent** (with Foundry IQ, Work IQ, Fabric IQ, and Web IQ tools) and publishes it to **Microsoft Teams / M365 Copilot** via the **Microsoft Agent 365 (A365)** SDK.
 
 The Foundry agent handles all intelligence (instructions, model, tool connections). This project is the A365 hosting wrapper that adds: Teams messaging, notifications (email, Word comments), observability, and user identity passthrough (OBO).
 
@@ -44,9 +44,18 @@ pip install -r agent/requirements.txt
 
 ---
 
-### Step 2: Create the Foundry Agent with 3 IQs
+### Step 2: Create the Foundry Agent with 4 IQs
 
 You can set up the agent **manually via the portal** or **programmatically via the setup script**.
+
+The four IQs this agent uses:
+
+| IQ | Purpose | Connection auth type |
+|----|---------|----------------------|
+| **Foundry IQ** | Knowledge / RAG over your policy docs | (built-in / knowledge base) |
+| **Work IQ** | Read Teams messages & Outlook mail (user's data) | `UserEntraToken` (identity passthrough) |
+| **Fabric IQ** | Query your data via a Fabric Data Agent | identity passthrough (OBO) |
+| **Web IQ** | Real-time web grounding / search | `CustomKeys` (static API key) |
 
 #### Option A: Use the Setup Script (recommended)
 
@@ -184,7 +193,47 @@ Because Fabric uses **identity passthrough (OBO)**, the *teammate user* (not an 
 
 > **Tip:** You can also add **Grounding with Bing Search** as a tool in the Foundry portal. This lets the agent search the web for real-time information (e.g., shipping delays, product recalls). No additional permissions are needed — just add the tool and save.
 
-#### 2.5 — Verify the Agent
+#### 2.5 — Set Up Web IQ (Real-time Web Grounding)
+
+Web IQ gives the agent **real-time web grounding** through Microsoft's web MCP server, so it can answer questions that need fresh public information (e.g., "is there a known shipping delay for carrier X?", current product recalls, public policies).
+
+Unlike Work IQ and Fabric IQ, **Web IQ does *not* use identity passthrough** — web search isn't scoped to a specific user, so the correct connection auth type is **`CustomKeys`** (a static API key), not `UserEntraToken`. There's no per-user OBO token and nothing to consent to.
+
+| Field | Value |
+|-------|-------|
+| `target` | `https://api.microsoft.ai/v3/mcp` |
+| `authType` | `CustomKeys` |
+| API key header | `x-apikey: <your-web-iq-key>` |
+
+**Add it as a tool:**
+
+1. In the agent's **Tools** section, click **+ Add tool** → **Custom MCP** (or **Web IQ**, if your tenant surfaces it directly)
+2. Set the server URL to `https://api.microsoft.ai/v3/mcp`
+3. Choose **API key** auth and add the header `x-apikey` with your Web IQ key
+4. Click **Save**
+
+If the portal form won't let you store a custom header, create the connection directly via ARM (replace the placeholders):
+
+```bash
+# Get an ARM token: az account get-access-token --resource https://management.azure.com
+az rest --method PUT \
+  --url "https://management.azure.com/subscriptions/<SUB_ID>/resourceGroups/<RG>/providers/Microsoft.CognitiveServices/accounts/<ACCOUNT>/projects/<PROJECT>/connections/WebIQ?api-version=2025-06-01" \
+  --body '{
+    "properties": {
+      "authType": "CustomKeys",
+      "category": "RemoteTool",
+      "target": "https://api.microsoft.ai/v3/mcp",
+      "group": "GenericProtocol",
+      "isSharedToAll": false,
+      "credentials": { "keys": { "x-apikey": "<YOUR_WEB_IQ_API_KEY>" } },
+      "metadata": { "type": "custom_MCP" }
+    }
+  }'
+```
+
+> **Why `CustomKeys` here and not `UserEntraToken`?** Work IQ and Fabric IQ read the *user's* data, so they must pass the caller's identity through (OBO). Web IQ reads the *public web*, which is identity-independent — a service API key is all it needs. Picking the right auth type per IQ is the key takeaway (see the auth-type table in [TROUBLESHOOTING.md](TROUBLESHOOTING.md#work-iq-errors)).
+
+#### 2.6 — Verify the Agent
 
 Before proceeding with A365 setup, test the agent in the Foundry playground:
 
@@ -193,6 +242,7 @@ Before proceeding with A365 setup, test the agent in the Foundry playground:
    - **Foundry IQ**: "What is the refund policy for digital products?"
    - **Fabric IQ**: "Show me recent orders for Mike Johnson"
    - **Work IQ**: "Check my recent emails about refund requests"
+   - **Web IQ**: "Are there any current shipping carrier delays affecting deliveries?"
 3. If MCP approval dialogs appear, approve them — the A365 agent code handles this automatically in production
 4. Note the agent's **display name** — you'll set this as `FOUNDRY_AGENT_NAME` in `.env`
 

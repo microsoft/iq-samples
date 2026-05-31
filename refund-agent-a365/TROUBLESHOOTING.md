@@ -129,6 +129,8 @@ Foundry returned HTTP 200 but with only `mcp_approval_request` items (no assista
 
 When you add Work IQ from the portal, the default is often **`OAuth2`**, which only works interactively (hence "fine in the playground"). For the agentic A365 path you must use **`UserEntraToken`**.
 
+> `CustomKeys` is the *correct* choice for tools that aren't scoped to a user — e.g. **Web IQ** (web grounding, `https://api.microsoft.ai/v3/mcp`) authenticates with a static `x-apikey` and needs no identity. The rule of thumb: user-data tools (Work IQ, Fabric IQ) → `UserEntraToken`; public/service tools (Web IQ) → `CustomKeys`.
+
 **Fix — recreate the connection as `UserEntraToken`.** The portal form is schema-driven and won't create a credential-less passthrough connection, so PUT it directly to ARM:
 
 ```bash
