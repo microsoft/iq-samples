@@ -46,6 +46,22 @@ from microsoft_agents_a365.notifications.agent_notification import NotificationT
 
 _API_VERSION = "2025-11-15-preview"
 
+# Item types the Responses API accepts as *input*. When continuing after an MCP
+# approval we re-submit the prior output, but tool-specific output items (e.g. a
+# Fabric Data Agent call item) are NOT valid input and trigger
+# `400 invalid_value ... input[N]`. We filter resubmitted items to this set so
+# only replayable items (messages, reasoning, approval requests, etc.) are sent.
+_ALLOWED_INPUT_ITEM_TYPES = {
+    "apply_patch_call", "apply_patch_call_output", "code_interpreter_call",
+    "compaction", "compaction_trigger", "computer_call", "computer_call_output",
+    "custom_tool_call", "custom_tool_call_output", "file_search_call",
+    "function_call", "function_call_output", "image_generation_call",
+    "item_reference", "local_shell_call", "local_shell_call_output",
+    "mcp_approval_request", "mcp_approval_response", "mcp_call", "mcp_list_tools",
+    "message", "reasoning", "shell_call", "shell_call_output",
+    "tool_search_call", "tool_search_output", "web_search_call",
+}
+
 
 class RefundAgent(AgentInterface):
     """
@@ -304,10 +320,16 @@ class RefundAgent(AgentInterface):
                 break
             
             logger.info(f"🔄 Auto-approving {len(approval_items)} MCP tool request(s)")
-            # Build approval responses
+            # Build approval responses. Only re-submit output items that are valid
+            # as Responses API input — skip non-replayable tool-call items (e.g. a
+            # Fabric Data Agent call) which would cause `400 invalid_value`.
             approval_input = []
             for item in response.output:
-                approval_input.append(item)
+                item_type = getattr(item, "type", None)
+                if item_type in _ALLOWED_INPUT_ITEM_TYPES:
+                    approval_input.append(item)
+                else:
+                    logger.info(f"⏭️ Skipping non-replayable output item: type={item_type}")
             for item in approval_items:
                 approval_input.append({
                     "type": "mcp_approval_response",

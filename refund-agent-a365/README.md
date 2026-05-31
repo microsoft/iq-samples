@@ -102,13 +102,17 @@ The agent will now automatically search these documents when users ask about ref
 
 #### 2.3 — Set Up Work IQ (Teams + Email)
 
-Work IQ lets the agent read/send Teams messages and emails on behalf of the A365 teammate account.
+Work IQ lets the agent read Teams messages and emails on behalf of the A365 teammate account (and, with the action tools, send them).
 
 1. In the agent's **Tools** section, click **+ Add tool** → **Work IQ**
 2. Select the capabilities to enable:
-   - **Teams**: Read and send Teams messages, search chats
-   - **Mail**: Read, send, and search emails via Outlook/Exchange
+   - **Teams**: Read and search Teams messages and chats
+   - **Mail**: Read and search emails via Outlook/Exchange
 3. Click **Save**
+
+> **Read vs. send:** The unified Work IQ `ask` tool is **read-only** retrieval. **Sending** mail/Teams messages uses separate *action* tools that authenticate against a different resource (`audience` = `ea9ffc3e-8a23-4a7d-836d-234d7c7565c1`, the Agent 365 resource). If your agent can read but not send, add those action-tool connections — see [TROUBLESHOOTING.md](TROUBLESHOOTING.md#work-iq-errors).
+
+> ⚠️ **Critical for Teams/A365 (not just the playground):** the Work IQ connection must use **identity passthrough** (`authType: UserEntraToken`), **not** `OAuth2`. The portal often defaults to `OAuth2`, which only works with interactive browser consent — it works in the Foundry **playground** but fails headless in Teams with an `oauth_consent_request` loop (the agent then hallucinates instead of calling Work IQ). See [Work IQ works in the playground but fails in Teams](TROUBLESHOOTING.md#error-work-iq-works-in-the-foundry-playground-but-fails-in-teams--headless-oauth_consent_request-loop-hallucinated-answers) for the fix.
 
 **Important:** Work IQ tools require **user identity passthrough (OBO)**. The A365 platform provides the user token via `AgenticUserAuthorization`, and Foundry forwards it to Work IQ. This is why:
 - The teammate account needs an **M365 license with Teams** (see Step 7)
@@ -166,6 +170,17 @@ Fabric IQ connects the agent to your data in Microsoft Fabric (Lakehouse, Wareho
 - Blueprint must have inheritable permissions for **Microsoft Cognitive Services** and **Azure Machine Learning Services** (see Step 4.2)
 - The delegated user must have READ access on the underlying data sources (Lakehouse, Warehouse, etc.)
 - The token scope must be `https://ai.azure.com/.default` — Foundry internally handles the OBO exchange to Fabric
+
+Because Fabric uses **identity passthrough (OBO)**, the *teammate user* (not an app) is the principal Fabric authorizes. Grant the teammate at least **Viewer** on the Fabric workspace **and** the minimum per-source permission for each datasource the Data Agent reads:
+
+| Datasource | Minimum permission |
+|-----------|--------------------|
+| Power BI semantic model | **Build** |
+| Lakehouse | **Read** |
+| Warehouse / SQL endpoint | **Read** (SELECT) |
+| KQL database | **Reader** |
+
+> You can grant workspace access programmatically: `POST https://api.fabric.microsoft.com/v1/workspaces/<workspaceId>/roleAssignments` with body `{"principal": {"id": "<userOid>", "type": "User"}, "role": "Viewer"}` (Fabric token, `--resource https://api.fabric.microsoft.com`). Without these grants Fabric returns `"User is not authorized"` (`tool_user_error`).
 
 > **Tip:** You can also add **Grounding with Bing Search** as a tool in the Foundry portal. This lets the agent search the web for real-time information (e.g., shipping delays, product recalls). No additional permissions are needed — just add the tool and save.
 

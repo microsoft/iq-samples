@@ -38,6 +38,21 @@ ENV_AGENT_NAME = "FOUNDRY_AGENT_NAME"
 
 # Defaults
 DEFAULT_AGENT_NAME = "Refund-agent"
+
+# Item types the Responses API accepts as *input*. When continuing after an MCP
+# approval we re-submit the prior output, but tool-specific output items (e.g. a
+# Fabric Data Agent call item) are NOT valid input and trigger
+# `400 invalid_value ... input[N]`. Filter resubmitted items to this set.
+_ALLOWED_INPUT_ITEM_TYPES = {
+    "apply_patch_call", "apply_patch_call_output", "code_interpreter_call",
+    "compaction", "compaction_trigger", "computer_call", "computer_call_output",
+    "custom_tool_call", "custom_tool_call_output", "file_search_call",
+    "function_call", "function_call_output", "image_generation_call",
+    "item_reference", "local_shell_call", "local_shell_call_output",
+    "mcp_approval_request", "mcp_approval_response", "mcp_call", "mcp_list_tools",
+    "message", "reasoning", "shell_call", "shell_call_output",
+    "tool_search_call", "tool_search_output", "web_search_call",
+}
 TOKEN_SCOPE = "https://ai.azure.com/.default"
 FOUNDRY_API_VERSION = "2025-11-15-preview"
 
@@ -258,10 +273,16 @@ class FabricAgentRunner:
                     "error": f"Agent error: {error_msg}",
                 }
 
-            # Check if we need to handle MCP approvals or OAuth consent
+            # Check if we need to handle MCP approvals or OAuth consent.
+            # Only re-submit output items that are valid as Responses API input —
+            # skip non-replayable tool-call items (e.g. a Fabric Data Agent call)
+            # which would cause `400 invalid_value`.
             output_items = data.get("output", [])
             needs_continuation = False
-            continuation_input = list(output_items)  # echo all output back
+            continuation_input = [
+                item for item in output_items
+                if item.get("type", "") in _ALLOWED_INPUT_ITEM_TYPES
+            ]
 
             for item in output_items:
                 item_type = item.get("type", "")

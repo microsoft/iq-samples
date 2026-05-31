@@ -115,6 +115,49 @@ Foundry returned HTTP 200 but with only `mcp_approval_request` items (no assista
 
 ## Work IQ Errors
 
+### Error: Work IQ works in the Foundry playground but fails in Teams / headless (`oauth_consent_request` loop, hallucinated answers)
+
+**Symptom:** In the Foundry **playground** the agent reads Teams/Outlook fine, but once published to **Teams via A365** (or any non-interactive caller) it never actually calls Work IQ — it hallucinates an answer, or the Responses API keeps returning `oauth_consent_request` items that can't be satisfied.
+
+**Root cause — the connection's `authType`.** This is the single most common demo-breaker. A Foundry MCP tool connection can authenticate three ways:
+
+| `authType` | How it authenticates | Works headless (Teams/A365)? |
+|------------|---------------------|------------------------------|
+| `OAuth2` | **Interactive** human consent in a browser | ❌ No — needs a UI; fails with `oauth_consent_request` |
+| `UserEntraToken` | **Identity passthrough** — forwards the caller's Entra token (OBO) and mints a token for the connection's `audience` | ✅ Yes |
+| `CustomKeys` | Static API key (app-level, no user identity) | ✅ but no user identity — Work IQ rejects it |
+
+When you add Work IQ from the portal, the default is often **`OAuth2`**, which only works interactively (hence "fine in the playground"). For the agentic A365 path you must use **`UserEntraToken`**.
+
+**Fix — recreate the connection as `UserEntraToken`.** The portal form is schema-driven and won't create a credential-less passthrough connection, so PUT it directly to ARM:
+
+```bash
+# Get an ARM token: az account get-access-token --resource https://management.azure.com
+az rest --method PUT \
+  --url "https://management.azure.com/subscriptions/<SUB_ID>/resourceGroups/<RG>/providers/Microsoft.CognitiveServices/accounts/<ACCOUNT>/projects/<PROJECT>/connections/WorkIQ?api-version=2025-06-01" \
+  --body '{
+    "properties": {
+      "authType": "UserEntraToken",
+      "category": "RemoteTool",
+      "target": "https://workiq.svc.cloud.microsoft/mcp",
+      "audience": "fdcc1f02-fc51-4226-8753-f668596af7f7",
+      "group": "GenericProtocol",
+      "isSharedToAll": false,
+      "metadata": { "type": "custom_MCP" }
+    }
+  }'
+```
+
+Key fields:
+- **`target`** — the Work IQ MCP endpoint (`https://workiq.svc.cloud.microsoft/mcp`).
+- **`audience`** — the resource appId Foundry mints the OBO token for. For unified Work IQ this is `fdcc1f02-fc51-4226-8753-f668596af7f7` (`api://workiq.svc.cloud.microsoft`, scope `WorkIQAgent.Ask`). `UserEntraToken` stores **no** credential — only the `audience` matters.
+
+Verify with `GET …/connections/WorkIQ?api-version=2025-06-01` and confirm `authType: UserEntraToken`.
+
+> **Note — no app-only auth to Work IQ.** You cannot authenticate Work IQ with an app-only (client-credentials / Managed Identity) token — agentic apps are blocked with `AADSTS82001`. The principal Work IQ authenticates is always the **user** (delegated/OBO). The blueprint, agent-instance, and Work IQ resource app registrations are plumbing; the caller is the teammate user.
+
+> **Note — `ask` is read-only.** The unified Work IQ MCP exposes a single `ask` tool (read-only retrieval over Teams/Outlook/files). **Sending** mail or Teams messages uses separate *action* tools with a different `audience` (`ea9ffc3e-8a23-4a7d-836d-234d7c7565c1`, the Agent 365 resource) — e.g. Mail → `https://agent365.svc.cloud.microsoft/agents/servers/mcp_MailTools`. If the agent can read but not send, you're missing those action-tool connections.
+
 ### Error: "Copilot email search failed (500)" from Work IQ Mail
 
 The Work IQ `SearchMessages` tool uses **Copilot semantic search**, which requires a **Microsoft 365 Copilot license** — an E5 license alone is **not sufficient**. Even after assigning the license, the semantic index can take **up to 24 hours** to provision for a new user.
@@ -349,6 +392,16 @@ Foundry's Responses API returns `mcp_approval_request` items when tools (Foundry
 4. Repeat until a final assistant message is returned
 
 Without this, the agent returns "I processed your request but couldn't generate a response."
+
+**Gotcha — don't re-submit non-replayable output items.** When continuing after an approval, only re-send output items that are valid as Responses API *input*. Tool-specific output items (e.g. a **Fabric Data Agent** call item) are **not** valid input and cause:
+
+```
+400 invalid_value — Invalid value: 'fab…_call' … param: input[N].
+Supported values are: … 'mcp_approval_request', 'mcp_approval_response',
+'mcp_call', 'mcp_list_tools', 'message', 'reasoning', … 'web_search_call'.
+```
+
+This bites when Fabric IQ runs alongside another tool (e.g. Foundry IQ): the Fabric call item lands in `output`, gets echoed back as `input`, and the next call is rejected *before* the real tool runs. Filter the re-submitted items to the allowed input-type allow-list (see `_ALLOWED_INPUT_ITEM_TYPES` in `agent/agent.py` and `dashboard/backend/agent_runner.py`); keep only messages, reasoning, approval responses, etc.
 
 ### Token Scope: `ai.azure.com` NOT `cognitiveservices.azure.com`
 
