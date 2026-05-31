@@ -1,0 +1,35 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/microsoft/AgentSchema/refs/heads/main/schemas/v1.0/AgentManifest.yaml
+name: travel-agent
+displayName: "TravelAgent"
+description: >
+  A hosted corporate travel agent grounded with Foundry IQ (travel policies)
+  and Work IQ Mail (email search). Hosted deployment with OBO auth.
+metadata:
+  tags:
+    - AI Agent Hosting
+    - Agent Framework
+    - Foundry IQ
+    - Work IQ
+    - Travel
+    - Python
+template:
+  name: travel-agent
+  kind: hosted
+  protocols:
+    - protocol: responses
+      version: 1.0.0
+  environment_variables:
+    - name: FOUNDRY_MODEL
+      value: "{{FOUNDRY_MODEL}}"
+resources:
+  - kind: model
+    id: gpt-4.1
+    name: FOUNDRY_MODEL
+  # Foundry IQ knowledge base. The `id` must match the name of the knowledge
+  # resource you register in your Foundry project (see README → "Create the
+  # Foundry IQ knowledge base"). Update this to your knowledge base name.
+  - kind: knowledge
+    id: travel-policies-kb
+  # Work IQ Mail tool — provides email search via OBO. Only works when hosted.
+  - kind: tool
+    id: WorkIQMail

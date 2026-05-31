@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/microsoft/AgentSchema/refs/heads/main/schemas/v1.0/ContainerAgent.yaml
+
+kind: hosted
+name: travel-agent
+description: |
+    A hosted corporate travel agent grounded with Foundry IQ (travel policies)
+    and Work IQ Mail (email search). Built with the Agent Framework SDK and
+    designed for hosted deployment with OBO auth.
+metadata:
+    tags:
+        - AI Agent Hosting
+        - Agent Framework
+        - Foundry IQ
+        - Work IQ
+        - Travel
+        - Python
+protocols:
+    - protocol: responses
+      version: 1.0.0
+resources:
+    cpu: '0.5'
+    memory: 1.0Gi
+environment_variables:
+    - name: FOUNDRY_MODEL
+      value: gpt-4.1

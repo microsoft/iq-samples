@@ -1,0 +1,62 @@
+[
+  {
+    "id": "policy-1.1",
+    "section": "1.1 — Booking Authorization",
+    "category": "Approvals",
+    "content": "All business travel must be pre-approved. Domestic trips under $2,000 require manager approval only. Domestic trips $2,000–$5,000 require director approval. International travel of any amount requires VP-level approval plus a completed International Travel Request Form (ITRF). Same-day or emergency travel may be booked first and approved retroactively within 48 hours, but must include written justification."
+  },
+  {
+    "id": "policy-1.2",
+    "section": "1.2 — Advance Booking Requirements",
+    "category": "Approvals",
+    "content": "Flights must be booked at least 14 days in advance for domestic travel and 21 days for international travel to qualify for preferred rates. Bookings made within 7 days of departure require a Late Booking Justification attached to the expense report. Last-minute bookings (under 72 hours) are flagged for compliance review."
+  },
+  {
+    "id": "policy-2.1",
+    "section": "2.1 — Preferred Airlines",
+    "category": "Airlines",
+    "content": "Preferred airline partners are: United Airlines (domestic), Delta Air Lines (domestic), British Airways (transatlantic), and Singapore Airlines (Asia-Pacific). Employees must book preferred carriers unless the fare is more than 20% higher than the lowest reasonable alternative. Economy class is standard for flights under 6 hours. Premium economy is approved for flights 6–10 hours. Business class requires VP approval and is standard only for flights over 10 hours."
+  },
+  {
+    "id": "policy-2.2",
+    "section": "2.2 — Preferred Hotels",
+    "category": "Hotels",
+    "content": "The company has negotiated corporate rates with Marriott, Hilton, and IHG properties. Employees should book through the Travel Portal to access negotiated rates. Maximum nightly rate: $250/night domestic. Preferred vendor negotiated rates: Marriott ($220), Hilton ($210), IHG ($190). Rates above the maximum require director approval with justification. Airbnb and vacation rentals are not permitted."
+  },
+  {
+    "id": "policy-3.1",
+    "section": "3.1 — Per Diem Rates (Meals & Incidentals)",
+    "category": "Expenses",
+    "content": "The standard domestic meal per diem is $75/day, following the GSA schedule. International travel follows State Department rates. Per diem covers meals and incidental expenses. Alcohol is not reimbursable unless it is a client dinner with prior approval. Receipts are required for any expense over $25. Client entertainment meals follow a separate policy (see Section 3.4) and are not subject to per diem limits."
+  },
+  {
+    "id": "policy-3.2",
+    "section": "3.2 — Expense Reporting Deadlines",
+    "category": "Expenses",
+    "content": "Expense reports must be submitted within 10 business days of trip completion. Reports submitted after 30 days require VP approval and may be subject to tax withholding. Receipts are required for all expenses over $25. Digital receipts (photos, email confirmations) are accepted. Corporate card transactions are auto-populated but must still be categorized and submitted."
+  },
+  {
+    "id": "policy-4.1",
+    "section": "4.1 — International Travel: Visa & Documentation",
+    "category": "International",
+    "content": "Employees traveling internationally must verify visa requirements at least 30 days before departure. The travel desk can assist with visa applications. Passport must be valid for at least 6 months beyond the travel dates. The company covers visa application fees and expedited passport processing when travel is company-initiated."
+  },
+  {
+    "id": "policy-4.2",
+    "section": "4.2 — International Travel: Security & Insurance",
+    "category": "International",
+    "content": "All international travelers must complete the online Security Awareness Briefing before departure. Travel to countries with a State Department Level 3 or 4 advisory requires CISO approval and a security escort plan. The company provides travel insurance automatically for all business travel, including medical evacuation coverage. Employees must register their trip in the Travel Safety Portal for real-time alerts."
+  },
+  {
+    "id": "policy-5.1",
+    "section": "5.1 — Ground Transportation",
+    "category": "Transportation",
+    "content": "Rental cars must be booked through Enterprise or National (preferred vendors). Full-size or smaller vehicles only — SUVs and luxury vehicles require justification. Rideshare (Uber/Lyft) is approved for airport transfers and local transportation. Mileage reimbursement for personal vehicles is $0.67/mile (2026 IRS rate). Parking and tolls are reimbursable with receipts."
+  },
+  {
+    "id": "policy-6.1",
+    "section": "6.1 — Travel Cancellation & Changes",
+    "category": "Changes",
+    "content": "Employees should book refundable or changeable fares when the fare difference is less than $100 compared to non-refundable options. Cancellation fees for non-refundable bookings are reimbursable only when cancellation is due to business reasons (documented by manager) or covered emergencies. No-show charges are not reimbursable and will be flagged for follow-up. Unused tickets and credits must be reported to the travel desk within 5 business days."
+  }
+]

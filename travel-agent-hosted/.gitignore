@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+
+# Environment — never commit real secrets
+.env
+
+# Testing
+.pytest_cache/
+test-results/
+
+# Azure / Foundry
+.azure/
+.foundry/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo

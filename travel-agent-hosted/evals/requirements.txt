@@ -1,0 +1,5 @@
+python-dotenv
+pytest>=9.0
+pytest-xdist
+pytest-agent-evals>=0.0.1b260129
+azure-core-tracing-opentelemetry>=1.0.0b12
