@@ -1,6 +1,6 @@
 # IQ Samples
 
-End-to-end samples showcasing **Foundry IQ**, **Fabric IQ**, **Work IQ**, and **Web IQ** integrations with Microsoft 365 agents and Azure AI Foundry.
+End-to-end samples showcasing **Foundry IQ**, **Fabric IQ**, **Work IQ**, and **Web IQ** integrations in AI agents: with Microsoft 365 agents and Azure AI Foundry.
 
 > 📚 **New to the IQs?** Start with **[The Microsoft IQ Series](https://github.com/microsoft/iq-series)** — a guided learning series that explains Foundry IQ, Fabric IQ, Work IQ, and Web IQ from the ground up. Then come back here to build with them.
 >
