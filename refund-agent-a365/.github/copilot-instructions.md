@@ -6,7 +6,7 @@ This sample is part of the `microsoft/iq-samples` repo. **Only read and modify f
 
 ## Project Identity
 
-This is a **Python agent** that wraps an **Azure AI Foundry agent** (with Fabric Data Agent + Work IQ tools) and publishes it to **Microsoft Teams / M365 Copilot** via the **Microsoft Agent 365 (A365)** SDK. The Foundry agent handles all intelligence; this project is the A365 hosting wrapper that adds Teams messaging, notifications, observability, and user identity passthrough (OBO).
+This is a **Python agent** that wraps an **Microsoft Foundry agent** (with Fabric Data Agent + Work IQ tools) and publishes it to **Microsoft Teams / M365 Copilot** via the **Microsoft Agent 365 (A365)** SDK. The Foundry agent handles all intelligence; this project is the A365 hosting wrapper that adds Teams messaging, notifications, observability, and user identity passthrough (OBO).
 
 ## Tech Stack
 
@@ -15,7 +15,7 @@ This is a **Python agent** that wraps an **Azure AI Foundry agent** (with Fabric
 | **Agent host** | Python 3.11+, A365 SDK (`microsoft-agents-*` packages), aiohttp |
 | **Dashboard backend** | Python, FastAPI |
 | **Dashboard frontend** | React, TypeScript, Vite |
-| **Deployment** | Azure App Service (Linux), Azure AI Foundry |
+| **Deployment** | Azure App Service (Linux), Microsoft Foundry |
 
 ## Key Files
 
@@ -28,7 +28,7 @@ This is a **Python agent** that wraps an **Azure AI Foundry agent** (with Fabric
 | `agent/token_cache.py` | OBO token acquisition and caching |
 | `agent/.env.template` | Environment variable template — copy to `.env` and fill in values |
 | `agent/a365.config.example.json` | A365 CLI config template |
-| `agent-instructions.md` | **Foundry agent system prompt** (paste into Azure AI Foundry UI — this is NOT code) |
+| `agent-instructions.md` | **Foundry agent system prompt** (paste into Microsoft Foundry UI — this is NOT code) |
 | `dashboard/` | Full-stack demo dashboard (FastAPI backend + React frontend) |
 | `azure.yaml` | Azure Developer CLI deployment descriptor |
 | `scripts/setup_foundry_agent.py` | Programmatic Foundry agent creation with IQ tools (uses azure-ai-agents SDK) |

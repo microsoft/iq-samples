@@ -67,7 +67,7 @@ VERSION_REFRESH_SECONDS = 300
 
 class FabricAgentRunner:
     """
-    Sends questions to an Azure AI Foundry Agent via the Responses API.
+    Sends questions to an Microsoft Foundry Agent via the Responses API.
 
     Lifecycle:
     - initialize(): Validate config and verify connectivity
@@ -410,7 +410,7 @@ class FabricAgentRunner:
 
         if "404" in error_str:
             return (
-                "Could not reach the Azure AI Foundry project. "
+                "Could not reach the Microsoft Foundry project. "
                 "Please check that AZURE_PROJECT_ENDPOINT is correct."
             )
 
@@ -423,7 +423,7 @@ class FabricAgentRunner:
         if "403" in error_str or "Forbidden" in error_str:
             return (
                 "Access denied. Your account may not have permission "
-                "to access this Azure AI Foundry project."
+                "to access this Microsoft Foundry project."
             )
 
         if "Failed to retrieve data" in error_str:

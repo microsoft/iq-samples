@@ -2,7 +2,7 @@
 
 > **Origin:** Amanda Silver's refund agent vision (BRK240 session script). This plan treats the repository as a from-scratch build, documenting every layer of the system so that a developer (or an AI agent) can reconstruct the entire application end-to-end.
 
-> **Repository layout (microsoft/iq-samples):** This plan is the from-scratch vision. In the committed sample the code lives under three top-level folders — `agent/` (the A365 hosting wrapper), `dashboard/` (FastAPI backend + React frontend), and `scripts/` (Foundry agent setup) — with `agent-instructions.md`, `azure.yaml`, `README.md`, and `TROUBLESHOOTING.md` at the root. The Fabric ontology / semantic model and the Foundry IQ, Work IQ, Fabric IQ, and **Web IQ** tool connections are configured in the Azure AI Foundry and Microsoft Fabric portals (wired via `scripts/setup_foundry_agent.py`), not committed as local `infra/`, `ontology/`, or `manifest/` folders. The file paths in the layer sections below describe the conceptual design; see the [File Map](#13-file-map) for the actual tree.
+> **Repository layout (microsoft/iq-samples):** This plan is the from-scratch vision. In the committed sample the code lives under three top-level folders — `agent/` (the A365 hosting wrapper), `dashboard/` (FastAPI backend + React frontend), and `scripts/` (Foundry agent setup) — with `agent-instructions.md`, `azure.yaml`, `README.md`, and `TROUBLESHOOTING.md` at the root. The Fabric ontology / semantic model and the Foundry IQ, Work IQ, Fabric IQ, and **Web IQ** tool connections are configured in the Microsoft Foundry and Microsoft Fabric portals (wired via `scripts/setup_foundry_agent.py`), not committed as local `infra/`, `ontology/`, or `manifest/` folders. The file paths in the layer sections below describe the conceptual design; see the [File Map](#13-file-map) for the actual tree.
 
 ---
 
@@ -65,7 +65,7 @@ The refund agent should:
                        │ OpenAI Responses API
                        ▼
 ┌─────────────────────────────────────────────────────────┐
-│              Azure AI Foundry Agent                      │
+│              Microsoft Foundry Agent                      │
 │  - System prompt from agent-instructions.md             │
 │  - Connected to:                                        │
 │    ├─ Foundry IQ (enterprise knowledge store)           │
@@ -108,7 +108,7 @@ The refund agent should:
 | Layer | Technology |
 |-------|-----------|
 | Host runtime | Python 3.11+, aiohttp, Microsoft Agents SDK |
-| AI orchestration | Azure AI Foundry, OpenAI Responses API |
+| AI orchestration | Microsoft Foundry, OpenAI Responses API |
 | Backend API | Python, FastAPI, uvicorn, WebSocket |
 | Frontend | React 19, TypeScript, Vite, MSAL.js |
 | Auth | Entra ID, MSAL, OBO token exchange |
@@ -246,7 +246,7 @@ The refund agent should:
 
 | Component | Location | Description |
 |-----------|----------|-------------|
-| Foundry IQ knowledge store | Azure AI Foundry (cloud) | Index of enterprise documents: refund policies, SLAs, procedures |
+| Foundry IQ knowledge store | Microsoft Foundry (cloud) | Index of enterprise documents: refund policies, SLAs, procedures |
 | Agent grounding config | Foundry agent settings | Connect agent to knowledge store for RAG |
 | Policy citation format | `agent-instructions.md` | Instruct agent to always cite document + section |
 
@@ -259,7 +259,7 @@ The refund agent should:
    - Customer communication templates
 
 2. **Create Foundry IQ knowledge store**:
-   - Upload documents to Azure AI Foundry
+   - Upload documents to Microsoft Foundry
    - Configure chunking strategy (prefer semantic chunking for policy docs)
    - Enable the knowledge store as a grounding source on the agent
 

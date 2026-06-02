@@ -8,7 +8,7 @@ Automates Foundry agent creation with SDK-supported tools:
   - Bing Search (BingGroundingTool) — optional web grounding
 
 Work IQ (Teams + email) has no SDK class and must be configured in the
-Azure AI Foundry portal after creation.  The script prints portal steps.
+Microsoft Foundry portal after creation.  The script prints portal steps.
 
 Usage:
     # First time — discover your project connections:
@@ -255,7 +255,7 @@ def _print_work_iq_instructions():
 
 Work IQ has no SDK support — you must configure it manually:
 
-1. Open Azure AI Foundry → your project → Agents
+1. Open Microsoft Foundry → your project → Agents
 2. Click on your agent (refund-agent)
 3. Under "Knowledge and tools" → click "+ Add"
 4. Select "Microsoft 365" (Work IQ)

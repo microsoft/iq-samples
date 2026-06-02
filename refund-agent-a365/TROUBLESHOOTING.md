@@ -273,7 +273,7 @@ This means Foundry couldn't authenticate the user to Fabric. Check:
 
 ### Prerequisites for Fabric Data Agent
 
-- Foundry agent must have a **Fabric Data Agent** tool connection configured in Azure AI Foundry portal
+- Foundry agent must have a **Fabric Data Agent** tool connection configured in Microsoft Foundry portal
 - The Fabric data agent must be in the **same tenant** as the Foundry project
 - Blueprint inheritable permissions must include:
   - **Microsoft Cognitive Services** (`7d312290-28c8-473c-a0ed-8e53749b6d6d`) — `user_impersonation`

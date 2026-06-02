@@ -1,6 +1,6 @@
 # Foundry Agent — System Prompt
 
-Paste this into the **Instructions** field when creating your Foundry agent in the Azure AI Foundry UI.
+Paste this into the **Instructions** field when creating your Foundry agent in the Microsoft Foundry UI.
 
 ---
 

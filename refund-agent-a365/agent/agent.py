@@ -1,7 +1,7 @@
 # Copyright (c) Microsoft. All rights reserved.
 
 """
-Refund Agent — Bridges to an existing Azure AI Foundry agent.
+Refund Agent — Bridges to an existing Microsoft Foundry agent.
 
 Instead of running its own LLM, this agent forwards messages to a Foundry agent
 that already has instructions, model config, and IQ connections (Foundry IQ for

@@ -10,8 +10,8 @@ End-to-end samples showcasing **Foundry IQ**, **Fabric IQ**, **Work IQ**, and **
 
 | Sample | Description | Stack |
 |--------|-------------|-------|
-| [Refund Agent (A365)](./refund-agent-a365/) | A365 agent wrapping an Azure AI Foundry agent with Fabric Data Agent, Foundry IQ knowledge, and Work IQ (Teams/email) — deployed to Microsoft Teams | Python 3.11+, A365 SDK, React/Vite dashboard |
-| [Travel Agent (Hosted, Foundry IQ + Work IQ)](./travel-agent-hosted/) | A hosted Azure AI Foundry agent (Agent Framework SDK) grounded with Foundry IQ travel policies and Work IQ Mail — answers with both standing policy and recent email overrides, with an evaluation suite | Python 3.12, Agent Framework SDK, pytest-agent-evals |
+| [Refund Agent (A365)](./refund-agent-a365/) | A365 agent wrapping an Microsoft Foundry agent with Fabric Data Agent, Foundry IQ knowledge, and Work IQ (Teams/email) — deployed to Microsoft Teams | Python 3.11+, A365 SDK, React/Vite dashboard |
+| [Travel Agent (Hosted, Foundry IQ + Work IQ)](./travel-agent-hosted/) | A hosted Microsoft Foundry agent (Agent Framework SDK) grounded with Foundry IQ travel policies and Work IQ Mail — answers with both standing policy and recent email overrides, with an evaluation suite | Python 3.12, Agent Framework SDK, pytest-agent-evals |
 
 ## 🧪 Hands-on Lab
 
@@ -24,7 +24,7 @@ Want a guided, self-paced walkthrough? **[Build Lab 532 — From Data to Context
 
 ### Prerequisites
 
-- **Azure subscription** with access to [Azure AI Foundry](https://ai.azure.com)
+- **Azure subscription** with access to [Microsoft Foundry](https://ai.azure.com)
 - **Microsoft 365 tenant** enrolled in the [Frontier Preview Program](https://adoption.microsoft.com/copilot/frontier-program/)
 - **Azure CLI** (`az login`) and **A365 CLI** ([install guide](https://learn.microsoft.com/en-us/microsoft-agent-365/developer/install-cli))
 - **Python 3.11+** (for agent samples)

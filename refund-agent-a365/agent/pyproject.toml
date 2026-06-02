@@ -1,12 +1,12 @@
 [project]
 name = "refund-agent-a365"
 version = "0.1.0"
-description = "Contoso Refund Agent — an Azure AI Foundry agent hosted on Agent 365"
+description = "Contoso Refund Agent — an Microsoft Foundry agent hosted on Agent 365"
 authors = [
     { name = "Microsoft", email = "support@microsoft.com" }
 ]
 dependencies = [
-    # Azure AI Foundry — connect via OpenAI Responses API
+    # Microsoft Foundry — connect via OpenAI Responses API
     "openai>=1.12.0",
     "azure-ai-projects>=2.0.0b2",
 

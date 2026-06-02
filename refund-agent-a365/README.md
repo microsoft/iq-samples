@@ -1,6 +1,6 @@
 # Refund Agent — A365 + 4 IQs
 
-A Python agent that wraps an **Azure AI Foundry agent** (with Foundry IQ, Work IQ, Fabric IQ, and Web IQ tools) and publishes it to **Microsoft Teams / M365 Copilot** via the **Microsoft Agent 365 (A365)** SDK.
+A Python agent that wraps an **Microsoft Foundry agent** (with Foundry IQ, Work IQ, Fabric IQ, and Web IQ tools) and publishes it to **Microsoft Teams / M365 Copilot** via the **Microsoft Agent 365 (A365)** SDK.
 
 The Foundry agent handles all intelligence (instructions, model, tool connections). This project is the A365 hosting wrapper that adds: Teams messaging, notifications (email, Word comments), observability, and user identity passthrough (OBO).
 
@@ -8,7 +8,7 @@ The Foundry agent handles all intelligence (instructions, model, tool connection
 
 ## 🚀 Fastest path: build it with GitHub Copilot CLI
 
-This setup spans Azure AI Foundry, four IQ tool connections, and the A365 SDK — a lot of moving parts. Instead of clicking through every step by hand, let **[GitHub Copilot CLI](https://docs.github.com/en/copilot/concepts/agents/about-copilot-cli)** drive it for you. It can read this README, run the `az`/A365 CLI commands, create the Foundry agent, wire up the IQ connections (with the correct auth types), and deploy.
+This setup spans Microsoft Foundry, four IQ tool connections, and the A365 SDK — a lot of moving parts. Instead of clicking through every step by hand, let **[GitHub Copilot CLI](https://docs.github.com/en/copilot/concepts/agents/about-copilot-cli)** drive it for you. It can read this README, run the `az`/A365 CLI commands, create the Foundry agent, wire up the IQ connections (with the correct auth types), and deploy.
 
 ```bash
 # 1. Install GitHub Copilot CLI (requires a GitHub Copilot subscription)
@@ -25,7 +25,7 @@ copilot
 Then paste this prompt:
 
 > Read the README.md and TROUBLESHOOTING.md in this folder end to end. I want to stand up this Refund Agent sample on my own Azure tenant. Help me, step by step:
-> 1. Verify prerequisites (az login, A365 CLI ≥ 1.1.171, an Azure AI Foundry project, an M365 E5/Copilot license with Teams).
+> 1. Verify prerequisites (az login, A365 CLI ≥ 1.1.171, an Microsoft Foundry project, an M365 E5/Copilot license with Teams).
 > 2. Create the Foundry agent using `scripts/setup_foundry_agent.py`, uploading my refund-policy doc as Foundry IQ knowledge.
 > 3. Wire up all four IQ tools with the **correct connection auth types** — Work IQ and Fabric IQ as `UserEntraToken` (identity passthrough), Web IQ as `CustomKeys`. Watch out for the OAuth2-vs-UserEntraToken gotcha documented in TROUBLESHOOTING.md.
 > 4. Grant the required RBAC (Azure AI Developer on the AI Services account + project) and Fabric workspace access for the teammate user.
@@ -54,7 +54,7 @@ Then paste this prompt:
 
 Follow these steps in order. The user must have:
 - Azure CLI logged in (`az login`)
-- An Azure AI Foundry project with an agent already created (with Fabric Data Agent and/or Foundry IQ tools connected)
+- An Microsoft Foundry project with an agent already created (with Fabric Data Agent and/or Foundry IQ tools connected)
 - The A365 CLI installed (see https://learn.microsoft.com/en-us/microsoft-agent-365/developer/install-cli) — **version 1.1.171+**
 - A tenant enrolled in the [Frontier Preview Program](https://adoption.microsoft.com/copilot/frontier-program/)
 - **Global Admin** or **Application Administrator** role in the tenant (needed for blueprint setup + consent)
@@ -112,7 +112,7 @@ See `scripts/setup_foundry_agent.py --help` for all options (`--list`, `--delete
 
 #### Option B: Manual Portal Setup
 
-In the Azure AI Foundry portal (https://ai.azure.com), open your project and create a new agent.
+In the Microsoft Foundry portal (https://ai.azure.com), open your project and create a new agent.
 
 #### 2.1 — Create the Agent
 
@@ -196,7 +196,7 @@ Fabric IQ connects the agent to your data in Microsoft Fabric (Lakehouse, Wareho
 
 **Step C — Connect to your Foundry agent:**
 
-1. In Azure AI Foundry, go to **Management center** → **Connected resources** → **+ New connection** → **Microsoft Fabric**
+1. In Microsoft Foundry, go to **Management center** → **Connected resources** → **+ New connection** → **Microsoft Fabric**
 2. Select the published Fabric Data Agent — this creates a connection resource
 3. Note the **connection ID** (full ARM path: `/subscriptions/.../connections/<name>`)
 4. Back in the Foundry agent's **Tools** section, click **+ Add tool** → **Fabric Data Agent**

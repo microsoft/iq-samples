@@ -9,7 +9,7 @@ fastapi>=0.109.0
 uvicorn[standard]>=0.27.0
 websockets>=12.0
 
-# Azure AI Foundry (Responses API via direct REST)
+# Microsoft Foundry (Responses API via direct REST)
 azure-identity>=1.15.0
 requests>=2.31.0
 
