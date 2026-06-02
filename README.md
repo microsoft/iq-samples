@@ -13,6 +13,13 @@ End-to-end samples showcasing **Foundry IQ**, **Fabric IQ**, **Work IQ**, and **
 | [Refund Agent (A365)](./refund-agent-a365/) | A365 agent wrapping an Azure AI Foundry agent with Fabric Data Agent, Foundry IQ knowledge, and Work IQ (Teams/email) — deployed to Microsoft Teams | Python 3.11+, A365 SDK, React/Vite dashboard |
 | [Travel Agent (Hosted, Foundry IQ + Work IQ)](./travel-agent-hosted/) | A hosted Azure AI Foundry agent (Agent Framework SDK) grounded with Foundry IQ travel policies and Work IQ Mail — answers with both standing policy and recent email overrides, with an evaluation suite | Python 3.12, Agent Framework SDK, pytest-agent-evals |
 
+## 🧪 Hands-on Lab
+
+Want a guided, self-paced walkthrough? **[Build Lab 532 — From Data to Context: Agent-Ready Knowledge with Foundry IQ](https://github.com/microsoft/Build26-LAB532)** takes you from raw data to a grounded, agent-ready knowledge base step by step.
+
+- 🧑‍🏫 **[Lab repo](https://github.com/microsoft/Build26-LAB532)** — the full hands-on lab
+- 🛠️ **[Self-deployment guide](https://github.com/microsoft/Build26-LAB532-from-data-to-context-agent-ready-knowledge-with-foundry-iq/blob/main/deploy_yourself.md)** — deploy and run it yourself, at your own pace
+
 ## Getting Started
 
 ### Prerequisites
@@ -44,6 +51,7 @@ End-to-end samples showcasing **Foundry IQ**, **Fabric IQ**, **Work IQ**, and **
 ## Learn More & Get Help
 
 - 📚 **[The Microsoft IQ Series](https://github.com/microsoft/iq-series)** — a guided learning series covering Foundry IQ, Fabric IQ, Work IQ, and Web IQ. The best place to understand the concepts before (or while) building these samples.
+- 🧪 **[Build Lab 532 — From Data to Context (Foundry IQ)](https://github.com/microsoft/Build26-LAB532)** — a hands-on lab with a [self-deployment guide](https://github.com/microsoft/Build26-LAB532-from-data-to-context-agent-ready-knowledge-with-foundry-iq/blob/main/deploy_yourself.md) you can run at your own pace.
 - 💬 **[IQ Discussions](https://aka.ms/iq/discussions)** — ask questions, share what you built, and get help from the team and community.
 - 🐛 **Issues** — found a bug in a sample? Open an issue in this repo.
 
