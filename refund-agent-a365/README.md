@@ -192,7 +192,7 @@ Fabric IQ connects the agent to your data in Microsoft Fabric (Lakehouse, Wareho
 7. **Test** queries in the Data Agent playground to verify it works
 8. **Publish** the data agent — this creates a published version that Foundry can connect to
 
-> **Tip:** You can also create and configure a Fabric Data Agent programmatically via the Fabric REST API (`POST /v1/workspaces/{workspaceId}/DataAgents` + `updateDefinition`). See the [fabriciq-foundry-viz](https://github.com/aycabas/fabriciq-foundry-viz) repo for scripted examples.
+> **Tip:** You can also create and configure a Fabric Data Agent programmatically via the Fabric REST API (`POST /v1/workspaces/{workspaceId}/DataAgents` + `updateDefinition`). Sample dataset CSVs and example queries are available in [`scripts/sample_data/`](scripts/sample_data/) for populating your Fabric Lakehouse.
 
 **Step C — Connect to your Foundry agent:**
 

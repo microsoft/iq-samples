@@ -1,0 +1,12 @@
+{
+  "What is the journey of package PKG-1234?": "MATCH (p:Package {packageId: 'PKG-1234'})-[:processed_at]->(h:Hub)\nRETURN p.packageId AS package_id, h.hubId AS hub_id, h.name AS hub_name, h.city AS hub_city",
+  "Which packages are delayed?": "MATCH (p:Package)\nFILTER p.status = 'delayed'\nRETURN p.packageId AS package_id, p.originCity AS origin, p.destinationCity AS destination, p.status AS status",
+  "Which hubs are connected to Hub Chicago?": "MATCH (h1:Hub {hubId: 'HUB-CHI'})-[:connected_to]->(h2:Hub)\nRETURN h1.name AS from_hub, h2.name AS to_hub, h2.city AS to_city",
+  "What is the status of Hub Chicago and why is it degraded?": "MATCH (h:Hub {hubId: 'HUB-CHI'})\nRETURN h.hubId AS hub_id, h.name AS hub_name, h.status AS status, h.delayReason AS delay_reason",
+  "Which drivers handled package PKG-1234?": "MATCH (p:Package {packageId: 'PKG-1234'})-[:driven_by]->(d:Driver)\nRETURN p.packageId AS package_id, d.driverId AS driver_id, d.name AS driver_name, d.homeHub AS home_hub",
+  "Who sent package PKG-1234?": "MATCH (p:Package {packageId: 'PKG-1234'})-[:sent_by]->(c:Customer)\nRETURN p.packageId AS package_id, c.customerId AS customer_id, c.name AS customer_name, c.city AS city",
+  "Which drivers are based at Hub Denver?": "MATCH (d:Driver)-[:based_at]->(h:Hub {hubId: 'HUB-DEN'})\nRETURN d.driverId AS driver_id, d.name AS driver_name, d.status AS status",
+  "Which packages passed through a degraded hub?": "MATCH (p:Package)-[:processed_at]->(h:Hub)\nFILTER h.status = 'degraded'\nRETURN p.packageId AS package_id, p.status AS package_status, h.hubId AS hub_id, h.name AS hub_name, h.delayReason AS delay_reason",
+  "Show the full network topology \u2014 which hubs connect to which?": "MATCH (h1:Hub)-[:connected_to]->(h2:Hub)\nRETURN h1.hubId AS from_hub, h1.city AS from_city, h2.hubId AS to_hub, h2.city AS to_city",
+  "What is the root cause of the delay for PKG-1234?": "MATCH (p:Package {packageId: 'PKG-1234'})-[:processed_at]->(h:Hub)\nFILTER h.status = 'degraded'\nRETURN p.packageId AS package_id, h.hubId AS hub_id, h.name AS hub_name, h.status AS hub_status, h.delayReason AS delay_reason"
+}

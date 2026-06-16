@@ -1,0 +1,11 @@
+package_id,origin_city,destination_city,status,weight_kg,sender_id,recipient_id,created_at,estimated_arrival
+PKG-1234,Seattle,Miami,delayed,2.5,CUST-001,CUST-002,2025-01-15T00:00:00,2025-01-19T00:00:00
+PKG-2001,Portland,New York,in_transit,5.0,CUST-003,CUST-004,2025-01-15T03:00:00,2025-01-20T00:00:00
+PKG-2045,Denver,Boston,in_transit,1.2,CUST-005,CUST-013,2025-01-15T06:00:00,2025-01-18T00:00:00
+PKG-3010,Los Angeles,Detroit,in_transit,8.3,CUST-012,CUST-006,2025-01-14T00:00:00,2025-01-19T00:00:00
+PKG-3022,San Francisco,Philadelphia,delayed,3.7,CUST-007,CUST-014,2025-01-14T12:00:00,2025-01-20T00:00:00
+PKG-4001,Seattle,Tampa,in_transit,4.1,CUST-001,CUST-008,2025-01-15T01:00:00,2025-01-19T00:00:00
+PKG-4015,Boise,Charlotte,in_transit,6.2,CUST-009,CUST-010,2025-01-15T08:00:00,2025-01-18T00:00:00
+PKG-5003,Phoenix,Washington DC,delayed,2.8,CUST-011,CUST-015,2025-01-14T18:00:00,2025-01-21T00:00:00
+PKG-6001,Houston,Atlanta,delivered,1.5,CUST-012,CUST-010,2025-01-12T00:00:00,2025-01-14T00:00:00
+PKG-6002,Miami,Seattle,in_transit,3.3,CUST-002,CUST-001,2025-01-15T00:00:00,2025-01-20T00:00:00

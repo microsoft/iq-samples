@@ -1,0 +1,9 @@
+driver_id,name,home_hub,status
+DRV-001,Kim Patel,HUB-SEA,available
+DRV-002,James Liu,HUB-DEN,en_route
+DRV-003,Mike Rodriguez,HUB-CHI,available
+DRV-004,Anna Brooks,HUB-ATL,en_route
+DRV-005,Sarah Kim,HUB-MIA,available
+DRV-006,David Chen,HUB-SEA,off_duty
+DRV-007,Lisa Nguyen,HUB-DEN,available
+DRV-008,Tom Jackson,HUB-CHI,en_route

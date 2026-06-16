@@ -1,0 +1,6 @@
+hub_id,name,city,capacity_per_day,status,delay_reason
+HUB-SEA,Hub Seattle,Seattle,3000,active,
+HUB-DEN,Hub Denver,Denver,4000,active,
+HUB-CHI,Hub Chicago,Chicago,5000,degraded,weather - Severe winter storm - 18 inches of snow at O'Hare corridor
+HUB-ATL,Hub Atlanta,Atlanta,4500,active,
+HUB-MIA,Hub Miami,Miami,3500,active,

@@ -1,0 +1,12 @@
+{
+  "How many packages are in each status?": "SELECT status, COUNT(*) AS package_count FROM dbo.packages GROUP BY status ORDER BY package_count DESC",
+  "What is the total revenue from all payments?": "SELECT SUM(amount_usd) AS total_revenue FROM dbo.payments WHERE payment_status = 'completed'",
+  "Show me the total cost (package + shipping) for each package.": "SELECT p.package_id, p.origin_city, p.destination_city, SUM(pay.amount_usd) AS total_cost FROM dbo.packages p JOIN dbo.payments pay ON p.package_id = pay.package_id GROUP BY p.package_id, p.origin_city, p.destination_city ORDER BY total_cost DESC",
+  "Which customers have spent the most?": "-- Payments are charged to the recipient (customer_id in payments table)\nSELECT c.name, c.city, c.customer_type, SUM(pay.amount_usd) AS total_spent FROM dbo.customers c JOIN dbo.payments pay ON c.customer_id = pay.customer_id GROUP BY c.name, c.city, c.customer_type ORDER BY total_spent DESC",
+  "Are there any pending payments?": "SELECT pay.payment_id, pay.package_id, pay.payment_type, pay.amount_usd, p.status AS package_status FROM dbo.payments pay JOIN dbo.packages p ON pay.package_id = p.package_id WHERE pay.payment_status = 'pending'",
+  "Which hubs have capacity over 4000 packages per day?": "SELECT hub_id, name, city, capacity_per_day FROM dbo.hubs WHERE capacity_per_day > 4000 ORDER BY capacity_per_day DESC",
+  "How many packages did each driver handle?": "SELECT d.name AS driver_name, d.home_hub, COUNT(DISTINCT h.package_id) AS packages_handled FROM dbo.drivers d JOIN dbo.handoffs h ON d.driver_id = h.driver_id GROUP BY d.name, d.home_hub ORDER BY packages_handled DESC",
+  "What is the average shipping cost for business vs individual customers?": "SELECT c.customer_type, AVG(pay.amount_usd) AS avg_shipping_cost FROM dbo.payments pay JOIN dbo.customers c ON pay.customer_id = c.customer_id WHERE pay.payment_type = 'shipping_cost' GROUP BY c.customer_type",
+  "Show me all packages sent from Seattle.": "SELECT package_id, destination_city, status, weight_kg, created_at FROM dbo.packages WHERE origin_city = 'Seattle'",
+  "What is the hub utilization (packages processed vs capacity)?": "-- Count handoffs per hub as a proxy for packages processed\nSELECT h.hub_id, h.name, h.capacity_per_day, COUNT(ho.handoff_id) AS packages_processed, ROUND(CAST(COUNT(ho.handoff_id) AS FLOAT) / h.capacity_per_day * 100, 1) AS utilization_pct FROM dbo.hubs h LEFT JOIN dbo.handoffs ho ON h.hub_id = ho.hub_id GROUP BY h.hub_id, h.name, h.capacity_per_day ORDER BY utilization_pct DESC"
+}

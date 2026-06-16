@@ -1,0 +1,16 @@
+customer_id,name,city,customer_type
+CUST-001,Sarah Chen,Seattle,individual
+CUST-002,Alex Martinez,Miami,individual
+CUST-003,Priya Sharma,Portland,business
+CUST-004,Ben Williams,New York,individual
+CUST-005,Mei Tanaka,Denver,business
+CUST-006,David Kim,Detroit,individual
+CUST-007,Rachel Green,San Francisco,business
+CUST-008,Omar Hassan,Tampa,individual
+CUST-009,Lisa Johnson,Boise,individual
+CUST-010,Tom Bradley,Charlotte,business
+CUST-011,Nina Patel,Phoenix,individual
+CUST-012,Chris Lee,Houston,business
+CUST-013,Emma Wilson,Boston,individual
+CUST-014,Jake Turner,Philadelphia,individual
+CUST-015,Maria Garcia,Washington DC,business
