@@ -1,5 +1,9 @@
-# Dependencies for the Foundry agent setup script
+# Dependencies for the Foundry agent setup scripts
 azure-ai-projects>=1.0.0b11
 azure-ai-agents>=1.0.0
 azure-identity>=1.19.0
 python-dotenv>=1.0.0
+
+# Dependencies for setup_foundry_iq_search.py (Azure AI Search knowledge pipeline)
+azure-search-documents>=11.6.0
+azure-storage-blob>=12.19.0

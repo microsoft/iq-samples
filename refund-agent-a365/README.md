@@ -139,6 +139,40 @@ The agent will now automatically search these documents when users ask about ref
 
 > **Tip:** You can also connect an Azure AI Search index as a Foundry IQ source for larger document collections.
 
+##### Option B — Scripted (Azure AI Search, matches production)
+
+The knowledge documents used by this sample live in [`knowledge/`](knowledge/)
+(`policies/`, `procurements/`, `products/`). The production agent grounds on them via
+**Azure Blob Storage → Azure AI Search index → agent knowledge source** (the
+`policies-ks` / `procurement-ks` / `products-ks` knowledge sources).
+
+[`scripts/setup_foundry_iq_search.py`](scripts/setup_foundry_iq_search.py) builds that
+whole pipeline for you — it uploads the docs to a blob container and creates a data
+source, a vector + semantic index (integrated vectorization, `text-embedding-3-small`
+@ 1536 dims, HNSW/cosine + scalar quantization), a split/embedding skillset with parent/
+child index projections, and an indexer — one per category:
+
+```bash
+pip install -r scripts/requirements.txt
+
+# Preview every Azure object first (no calls to Azure):
+python scripts/setup_foundry_iq_search.py --dry-run \
+    --search-endpoint https://<service>.search.windows.net \
+    --storage-account <account> \
+    --aoai-endpoint https://<resource>.openai.azure.com
+
+# Build all three indexes:
+python scripts/setup_foundry_iq_search.py \
+    --search-endpoint https://<service>.search.windows.net \
+    --storage-account <account> \
+    --aoai-endpoint https://<resource>.openai.azure.com
+```
+
+Then attach each resulting index (`refund-policies-index`, etc.) in the Foundry portal:
+agent → **Knowledge and tools → + Add → Azure AI Search Index**. Auth is keyless
+(`az login`) — see the script header for the required roles. See
+[`knowledge/README.md`](knowledge/README.md) for the folder → knowledge-source mapping.
+
 #### 2.3 — Set Up Work IQ (Teams + Email)
 
 Work IQ lets the agent read Teams messages and emails on behalf of the A365 teammate account (and, with the action tools, send them).

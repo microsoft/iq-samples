@@ -21,7 +21,29 @@ agent as a separate knowledge source:
 ## How Foundry IQ is set up in this sample
 
 Foundry IQ here uses **Azure Blob Storage → Azure AI Search → agent knowledge source**
-(not files uploaded directly to the agent):
+(not files uploaded directly to the agent).
+
+### Scripted (recommended)
+
+[`../scripts/setup_foundry_iq_search.py`](../scripts/setup_foundry_iq_search.py) builds
+the entire pipeline for every category — it uploads these docs to a blob container and
+creates the data source, vector + semantic index, split/embedding skillset (integrated
+vectorization with `text-embedding-3-small`), and indexer that back `policies-ks`,
+`procurement-ks`, and `products-ks`:
+
+```bash
+pip install -r ../scripts/requirements.txt
+python ../scripts/setup_foundry_iq_search.py \
+    --search-endpoint https://<service>.search.windows.net \
+    --storage-account <account> \
+    --aoai-endpoint https://<resource>.openai.azure.com
+```
+
+Add `--dry-run` to preview every Azure object without creating anything. Then attach each
+index in the Foundry portal: agent → **Knowledge and tools → + Add → Azure AI Search
+Index**.
+
+### Manual (portal)
 
 1. **Upload** these markdown files to an Azure Blob Storage container (one virtual
    folder per category, matching the layout above).
@@ -36,5 +58,6 @@ Once attached, the agent automatically searches these documents when a user asks
 refund policies, shipping timelines, warranties, vendors, or product details.
 
 > **Alternative (simpler) setup:** For a smaller demo you can skip Azure AI Search and
-> upload individual files directly as Foundry IQ knowledge (FileSearchTool). See the
-> repository README's "Set Up Foundry IQ" section.
+> upload individual files directly as Foundry IQ knowledge (FileSearchTool):
+> `python ../scripts/setup_foundry_agent.py --knowledge-files policies/*.md`.
+> See the repository README's "Set Up Foundry IQ" section.
